@@ -1,0 +1,16 @@
+services:
+  tomcat:
+    image: tomcat:10.1-jdk21
+    container_name: my-tomcat
+    volumes:
+      - ./shared-war-folder:/usr/local/tomcat/webapps
+    ports:
+      - "8080:8080"
+
+  deploy-watcher:
+    build: ./deploy-watcher
+    container_name: war-watcher
+    volumes:
+      - ./shared-war-folder:/watched
+    depends_on:
+      - tomcat
